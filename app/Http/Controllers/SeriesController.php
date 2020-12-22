@@ -8,13 +8,14 @@ use App\Serie;
 
 class SeriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $series = Serie::query()
         ->orderBy('nome')
         ->get();
+        $mensagens = $request->session()->get('mensagem');
 
-        return view('series.index', compact('series'));
+        return view('series.index', compact('series', 'mensagens'));
     }
 
     public function create()
@@ -25,6 +26,10 @@ class SeriesController extends Controller
     public function store(Request $request)
     {
         $series = Serie::create($request->all());
+        $request->session()->flash(
+            'mensagem',
+            "Série {$series->nome} criada com sucesso!"
+        );
 
         return redirect()->route('home');
     }
