@@ -3,6 +3,7 @@
     Séries
 @endsection
 @section('content')
+
 @if(!empty($mensagens))
     <div class="alert alert-success mt-4">
         {{ $mensagens }}

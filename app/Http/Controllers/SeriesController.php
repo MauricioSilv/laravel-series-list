@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Serie;
 
 class SeriesController extends Controller
@@ -25,6 +24,10 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nome' => 'required|min:2',
+        ]);
+
         $series = Serie::create($request->all());
         $request->session()->flash(
             'mensagem',
