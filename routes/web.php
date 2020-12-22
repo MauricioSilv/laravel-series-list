@@ -14,3 +14,4 @@
 Route::get('/series', 'SeriesController@index')->name('home');
 Route::get('/series/criar', 'SeriesController@create')->name('create');
 Route::post('/series/criar', 'SeriesController@store')->name('store');
+Route::delete('/series/delete/{id}', 'SeriesController@destroy')->name('excluir');

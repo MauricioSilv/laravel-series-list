@@ -33,4 +33,16 @@ class SeriesController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function destroy(Request $request)
+    {
+        Serie::destroy($request->id);
+
+        $request->session()->flash(
+            'mensagem',
+            "série removida com sucesso."
+        );
+
+        return redirect()->route('home');
+    }
 }
