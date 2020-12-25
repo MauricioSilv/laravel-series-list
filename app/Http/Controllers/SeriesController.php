@@ -7,6 +7,7 @@ use App\Temporada;
 use App\Episodio;
 use App\Serie;
 use App\Services\CriadorDeSerie;
+use App\Services\ExcluirSerie;
 
 class SeriesController extends Controller
 {
@@ -46,22 +47,13 @@ class SeriesController extends Controller
         return redirect()->route('home');
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, ExcluirSerie $excluirSerie)
     {
-        $serie = Serie::find($request->id);
-        $nomeSerie = $serie->nome;
-        $serie->temporadas->each(function (Temporada $temporada){
-            $temporada->episodios->each(function (Episodio $episodios){
-               $episodios->delete();
-            });
-            $temporada->delete();
-        });
-
-        $serie->delete();
+         $nomeDaSerie = $excluirSerie->excluirSerie($request->id);
 
         $request->session()->flash(
             'mensagem',
-            "série $nomeSerie removida com sucesso."
+            "série $nomeDaSerie removida com sucesso."
         );
 
         return redirect()->route('home');
