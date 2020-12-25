@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Serie;
+use App\Services\CriadorDeSerie;
 
 class SeriesController extends Controller
 {
@@ -22,22 +23,17 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, CriadorDeSerie $criadorDeSerie)
     {
         $request->validate([
             'nome' => 'required|min:2',
         ]);
 
-        $series = Serie::create(['nome' => $request->nome]);
-        $qtdTemporadas = $request->qtd_temporadas;
-
-        for ($i=1; $i <= $qtdTemporadas; $i++) {
-            $temporada = $series->temporadas()->create(['numero' => $i]);
-
-            for ($j=1; $j <= $request->ep_por_temporada; $j++) {
-                $temporada->episodios()->create(['numero' => $j]);
-            }
-        }
+        $series = $criadorDeSerie->criarSerie(
+            $request->nome,
+            $request->qtd_temporadas,
+            $request->ep_por_temporada,
+        );
 
 
         $request->session()->flash(
