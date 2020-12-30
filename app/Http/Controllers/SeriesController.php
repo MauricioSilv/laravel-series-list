@@ -47,6 +47,14 @@ class SeriesController extends Controller
         return redirect()->route('home');
     }
 
+    public function edit(int $id, Request $request)
+    {
+        $novoNome = $request->nome;
+        $serie = Serie::find($id);
+        $serie->nome = $novoNome;
+        $serie->save();
+    }
+
     public function destroy(Request $request, ExcluirSerie $excluirSerie)
     {
          $nomeDaSerie = $excluirSerie->excluirSerie($request->id);
