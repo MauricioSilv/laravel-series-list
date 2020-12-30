@@ -8,13 +8,12 @@ class ExcluirSerie
 {
     public function excluirSerie(int $IdDaSerie): string
     {
-        $nomeSerie = '';
-        DB::transaction(function () use($IdDaSerie, &$nomeSerie) {
+        DB::beginTransaction();
             $serie = Serie::find($IdDaSerie);
                 $nomeSerie = $serie->nome;
                     $this->removerTemporadas($serie);
                     $serie->delete();
-            });
+        DB::commit();
 
         return $nomeSerie;
     }
