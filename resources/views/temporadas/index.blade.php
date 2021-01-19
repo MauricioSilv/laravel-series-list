@@ -6,7 +6,7 @@
     <ul class="list-group">
         @foreach($temporadas as $temporada)
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="#">
+            <a href="{{ route('list_episodios', $temporada->id) }}">
                 Temporada {{ $temporada->numero }}
             </a>
             <span class="badge badge-secondary">

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Temporada;
-use App\Episodio;
 use App\Serie;
 use App\Services\CriadorDeSerie;
 use App\Services\ExcluirSerie;
@@ -35,7 +33,7 @@ class SeriesController extends Controller
         $series = $criadorDeSerie->criarSerie(
             $request->nome,
             $request->qtd_temporadas,
-            $request->ep_por_temporada,
+            $request->ep_por_temporada
         );
 
 
